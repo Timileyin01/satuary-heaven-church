@@ -137,7 +137,16 @@ export interface GuestBooking {
   isMemberRate: boolean;
   voucherCode?: string;
   totalAmount: number;
-  paymentMethod: 'Paystack' | 'Flutterwave' | 'Desk Hold (2h)' | 'Diocese Voucher';
+  paymentMethod:
+    | 'Paystack'
+    | 'Flutterwave'
+    | 'Desk Hold (2h)'
+    | 'Diocese Voucher'
+    | 'Email & WhatsApp'
+    | 'WhatsApp API'
+    | 'Email API';
+  dispatchId?: string;
+  bookingChannel?: 'email' | 'whatsapp' | 'both';
   status: 'Confirmed' | 'Hold Pending' | 'Checked In' | 'Completed' | 'Cancelled';
   createdAt: string;
 }

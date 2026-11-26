@@ -32,6 +32,7 @@ import {
 import { BUILDINGS, CONTACT_DETAILS, FEATURED_SUITES, IMAGES, INITIAL_PROGRAMMES } from '../data/sanctuaryData';
 import { BuildingSlug, FeaturedSuite, RoomRecord } from '../types';
 import { BookingDraft } from './BookingModal';
+import { EnquiryDraft } from './EnquiryModal';
 
 interface GuestPortalProps {
   rooms: RoomRecord[];
@@ -39,6 +40,7 @@ interface GuestPortalProps {
   onToggleMemberMode: (enabled: boolean) => void;
   onOpenSuiteDetails: (suite: FeaturedSuite) => void;
   onOpenBookingModal: (draft: BookingDraft) => void;
+  onOpenEnquiryModal: (draft: EnquiryDraft) => void;
   onNavigateToEvents: (buildingFilter?: BuildingSlug) => void;
 }
 
@@ -55,6 +57,7 @@ export const GuestPortal: React.FC<GuestPortalProps> = ({
   onToggleMemberMode,
   onOpenSuiteDetails,
   onOpenBookingModal,
+  onOpenEnquiryModal,
   onNavigateToEvents,
 }) => {
   const [selectedHall, setSelectedHall] = useState<'all' | BuildingSlug>('all');
@@ -1026,7 +1029,7 @@ export const GuestPortal: React.FC<GuestPortalProps> = ({
               Instant SMS Slip
             </span>
           </div>
-          <div className="w-full pt-3 border-t border-outline-variant/30 space-y-2 text-xs text-on-surface-variant">
+          <div className="w-full pt-3 border-t border-outline-variant/30 space-y-2.5 text-xs text-on-surface-variant">
             <div className="flex items-center justify-center gap-1.5 font-semibold text-primary">
               <HelpCircle className="w-4 h-4 text-secondary shrink-0" />
               <span>Bookings &amp; Enquiries Desk</span>
@@ -1047,6 +1050,18 @@ export const GuestPortal: React.FC<GuestPortalProps> = ({
                 <span>{CONTACT_DETAILS.email}</span>
               </a>
             </div>
+            <button
+              type="button"
+              onClick={() =>
+                onOpenEnquiryModal({
+                  subject: 'Sanctuary Haven Room Booking / General Enquiry',
+                })
+              }
+              className="w-full h-10 rounded-xl bg-secondary hover:bg-secondary/90 text-on-secondary text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+            >
+              <span>Send Booking / Enquiry via Email &amp; WhatsApp</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
           </div>
         </div>
       </section>

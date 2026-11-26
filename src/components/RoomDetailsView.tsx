@@ -31,6 +31,7 @@ import {
 import { CONTACT_DETAILS } from '../data/sanctuaryData';
 import { FeaturedSuite } from '../types';
 import { BookingDraft } from './BookingModal';
+import { EnquiryDraft } from './EnquiryModal';
 
 interface RoomDetailsViewProps {
   suite: FeaturedSuite;
@@ -38,6 +39,7 @@ interface RoomDetailsViewProps {
   onToggleMemberMode: () => void;
   onBack: () => void;
   onReserve: (draft: BookingDraft) => void;
+  onOpenEnquiryModal: (draft: EnquiryDraft) => void;
   onToast: (msg: string) => void;
 }
 
@@ -47,6 +49,7 @@ export const RoomDetailsView: React.FC<RoomDetailsViewProps> = ({
   onToggleMemberMode,
   onBack,
   onReserve,
+  onOpenEnquiryModal,
   onToast,
 }) => {
   const [saved, setSaved] = useState(true);
@@ -437,24 +440,41 @@ export const RoomDetailsView: React.FC<RoomDetailsViewProps> = ({
               <ArrowRight className="w-4 h-4" />
             </button>
 
-            <div className="pt-2 border-t border-outline-variant/25 flex flex-wrap items-center justify-between gap-2 text-xs text-on-surface-variant">
-              <span className="font-medium">Booking Enquiries:</span>
-              <div className="flex flex-wrap items-center gap-3">
-                <a
-                  href={`tel:${CONTACT_DETAILS.phone}`}
-                  className="inline-flex items-center gap-1 font-semibold text-primary hover:underline tabular-nums"
-                >
-                  <Phone className="w-3.5 h-3.5 text-secondary" />
-                  <span>{CONTACT_DETAILS.phone}</span>
-                </a>
-                <a
-                  href={`mailto:${CONTACT_DETAILS.email}`}
-                  className="inline-flex items-center gap-1 font-semibold text-primary hover:underline"
-                >
-                  <Mail className="w-3.5 h-3.5 text-secondary" />
-                  <span>{CONTACT_DETAILS.email}</span>
-                </a>
+            <div className="pt-2 border-t border-outline-variant/25 space-y-2.5 text-xs text-on-surface-variant">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <span className="font-medium">Booking Enquiries:</span>
+                <div className="flex flex-wrap items-center gap-3">
+                  <a
+                    href={`tel:${CONTACT_DETAILS.phone}`}
+                    className="inline-flex items-center gap-1 font-semibold text-primary hover:underline tabular-nums"
+                  >
+                    <Phone className="w-3.5 h-3.5 text-secondary" />
+                    <span>{CONTACT_DETAILS.phone}</span>
+                  </a>
+                  <a
+                    href={`mailto:${CONTACT_DETAILS.email}`}
+                    className="inline-flex items-center gap-1 font-semibold text-primary hover:underline"
+                  >
+                    <Mail className="w-3.5 h-3.5 text-secondary" />
+                    <span>{CONTACT_DETAILS.email}</span>
+                  </a>
+                </div>
               </div>
+              <button
+                type="button"
+                onClick={() =>
+                  onOpenEnquiryModal({
+                    subject: `Enquiry for ${suite.buildingName} · Room ${suite.roomNumber}`,
+                    buildingName: suite.buildingName,
+                    roomNumber: suite.roomNumber,
+                    presetMessage: `Hello Sanctuary Desk, I would like to enquire about booking ${suite.title} (Room ${suite.roomNumber}, ${suite.buildingName}) for ${nights} nights.`,
+                  })
+                }
+                className="w-full h-10 rounded-xl bg-surface-container hover:bg-surface-container-high text-primary text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+              >
+                <Mail className="w-3.5 h-3.5 text-secondary" />
+                <span>Book or Enquire via Email &amp; WhatsApp API</span>
+              </button>
             </div>
           </div>
         </div>

@@ -30,10 +30,12 @@ import {
 } from '../data/sanctuaryData';
 import { BuildingSlug, ProgrammeCategory } from '../types';
 import { BookingDraft } from './BookingModal';
+import { EnquiryDraft } from './EnquiryModal';
 
 interface ProgrammesViewProps {
   onBackToBrowse: () => void;
   onOpenBookingModal: (draft: BookingDraft) => void;
+  onOpenEnquiryModal: (draft: EnquiryDraft) => void;
   onToast: (msg: string) => void;
   blockRemainingOverrides: Record<string, number>;
   onDecrementBlock: (blockId: string) => void;
@@ -42,6 +44,7 @@ interface ProgrammesViewProps {
 export const ProgrammesView: React.FC<ProgrammesViewProps> = ({
   onBackToBrowse,
   onOpenBookingModal,
+  onOpenEnquiryModal,
   onToast,
   blockRemainingOverrides,
   onDecrementBlock,
@@ -618,14 +621,31 @@ export const ProgrammesView: React.FC<ProgrammesViewProps> = ({
                 <strong className="text-primary tabular-nums">{CONTACT_DETAILS.phone}</strong>
               </span>
             </div>
-            <button
-              type="button"
-              onClick={onBackToBrowse}
-              className="mt-2 inline-flex items-center gap-1 text-xs font-semibold text-secondary hover:underline cursor-pointer"
-            >
-              <span>Browse All 9 Residence Buildings</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </button>
+            <div className="flex flex-wrap items-center justify-between gap-2 pt-2">
+              <button
+                type="button"
+                onClick={() =>
+                  onOpenEnquiryModal({
+                    subject: 'Convention Group Lodging & Voucher Enquiry',
+                    buildingName: 'Shiloh Pavilion / Ebenezer Hall',
+                    presetMessage:
+                      'Hello Sanctuary Desk, our parish delegation would like to enquire about group convention lodging.',
+                  })
+                }
+                className="px-3.5 py-2 rounded-xl bg-primary hover:bg-primary-container text-on-primary text-xs font-semibold inline-flex items-center gap-1.5 transition-colors cursor-pointer"
+              >
+                <MessageSquare className="w-3.5 h-3.5 text-secondary-fixed" />
+                <span>Send Group Enquiry via Email &amp; WhatsApp</span>
+              </button>
+              <button
+                type="button"
+                onClick={onBackToBrowse}
+                className="inline-flex items-center gap-1 text-xs font-semibold text-secondary hover:underline cursor-pointer"
+              >
+                <span>Browse All 9 Residence Buildings</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
           </div>
         </div>
       </section>

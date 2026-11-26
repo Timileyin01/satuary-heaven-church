@@ -9,6 +9,7 @@ import {
 import { AdminDashboard } from './components/AdminDashboard';
 import { BookingDraft, BookingModal } from './components/BookingModal';
 import { CheckInConsole } from './components/CheckInConsole';
+import { EnquiryDraft, EnquiryModal } from './components/EnquiryModal';
 import { GuestPortal } from './components/GuestPortal';
 import { InventoryMatrix } from './components/InventoryMatrix';
 import { MyBookingsView } from './components/MyBookingsView';
@@ -54,6 +55,7 @@ export default function App() {
   const [matrixBuilding, setMatrixBuilding] = useState<'all' | BuildingSlug>('all');
   const [matrixStatus, setMatrixStatus] = useState<'all' | 'Booked' | RoomStatus>('all');
   const [bookingDraft, setBookingDraft] = useState<BookingDraft | null>(null);
+  const [enquiryDraft, setEnquiryDraft] = useState<EnquiryDraft | null>(null);
   const [blockRemainingOverrides, setBlockRemainingOverrides] = useState<Record<string, number>>({
     'block-shiloh-twin': 14,
     'block-ebenezer-quad': 6,
@@ -357,6 +359,7 @@ export default function App() {
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
             onOpenBookingModal={(draft) => setBookingDraft(draft)}
+            onOpenEnquiryModal={(draft) => setEnquiryDraft(draft)}
             onNavigateToEvents={() => handleSelectTab('events')}
           />
         )}
@@ -368,6 +371,7 @@ export default function App() {
             onToggleMemberMode={() => setIsMemberMode((v) => !v)}
             onBack={() => setSelectedSuite(null)}
             onReserve={(draft) => setBookingDraft(draft)}
+            onOpenEnquiryModal={(draft) => setEnquiryDraft(draft)}
             onToast={showToast}
           />
         )}
@@ -376,6 +380,7 @@ export default function App() {
           <ProgrammesView
             onBackToBrowse={() => handleSelectTab('explore')}
             onOpenBookingModal={(draft) => setBookingDraft(draft)}
+            onOpenEnquiryModal={(draft) => setEnquiryDraft(draft)}
             onToast={showToast}
             blockRemainingOverrides={blockRemainingOverrides}
             onDecrementBlock={(blockId) =>
@@ -396,6 +401,7 @@ export default function App() {
               setStaffSubTab('checkin');
               handleSelectTab('staff-ops');
             }}
+            onOpenEnquiryModal={(draft) => setEnquiryDraft(draft)}
           />
         )}
 
@@ -607,6 +613,16 @@ export default function App() {
         draft={bookingDraft}
         onClose={() => setBookingDraft(null)}
         onConfirmBooking={handleConfirmBooking}
+      />
+
+      {/* Interactive Email & WhatsApp Enquiry Modal */}
+      <EnquiryModal
+        draft={enquiryDraft}
+        onClose={() => setEnquiryDraft(null)}
+        onSubmitted={(ticketRef, summary) => {
+          addAudit(`Enquiry Dispatched (${ticketRef})`, summary, 'Enquiry API');
+          showToast(`Enquiry ${ticketRef} sent via Email & WhatsApp API.`);
+        }}
       />
     </div>
   );

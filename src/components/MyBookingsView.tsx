@@ -16,12 +16,14 @@ import {
 } from 'lucide-react';
 import { CONTACT_DETAILS } from '../data/sanctuaryData';
 import { GuestBooking } from '../types';
+import { EnquiryDraft } from './EnquiryModal';
 
 interface MyBookingsViewProps {
   bookings: GuestBooking[];
   onCancelBooking: (id: string) => void;
   onBrowseRooms: () => void;
   onOpenStaffCheckin: () => void;
+  onOpenEnquiryModal: (draft: EnquiryDraft) => void;
 }
 
 export const MyBookingsView: React.FC<MyBookingsViewProps> = ({
@@ -29,6 +31,7 @@ export const MyBookingsView: React.FC<MyBookingsViewProps> = ({
   onCancelBooking,
   onBrowseRooms,
   onOpenStaffCheckin,
+  onOpenEnquiryModal,
 }) => {
   const [selectedPass, setSelectedPass] = useState<GuestBooking | null>(null);
   const [qrDataUrl, setQrDataUrl] = useState<string>('');
@@ -217,6 +220,17 @@ export const MyBookingsView: React.FC<MyBookingsViewProps> = ({
             <Mail className="w-3.5 h-3.5 text-secondary" />
             <span>{CONTACT_DETAILS.email}</span>
           </a>
+          <button
+            type="button"
+            onClick={() =>
+              onOpenEnquiryModal({
+                subject: 'Booking Modification / Support Enquiry',
+              })
+            }
+            className="px-3 py-1.5 rounded-lg bg-primary text-on-primary text-xs font-semibold hover:bg-primary-container transition-colors cursor-pointer"
+          >
+            Enquire via API
+          </button>
         </div>
       </div>
 
