@@ -17,6 +17,11 @@ import {
 } from 'lucide-react';
 import { CONTACT_DETAILS } from '../data/sanctuaryData';
 import { BuildingSlug, GuestBooking } from '../types';
+import {
+  ApiDispatchResult,
+  DispatchChannel,
+  dispatchBookingRequest,
+} from '../utils/bookingApi';
 
 export interface BookingDraft {
   suiteTitle: string;
@@ -33,33 +38,7 @@ export interface BookingDraft {
   voucherCode?: string;
 }
 
-type DispatchChannel = 'both' | 'whatsapp' | 'email';
 type BookingMethod = 'Email & WhatsApp' | 'Paystack' | 'Flutterwave';
-
-interface ChannelDeliveryResult {
-  requested: boolean;
-  status: 'sent' | 'dispatched_relay' | 'skipped' | 'error';
-  recipient: string;
-  provider: string;
-  detail: string;
-}
-
-interface BookingDispatchResponse {
-  ok: boolean;
-  error?: string;
-  dispatchId?: string;
-  timestamp?: string;
-  channel?: DispatchChannel;
-  contacts?: {
-    phone: string;
-    email: string;
-  };
-  emailResult?: ChannelDeliveryResult;
-  whatsappResult?: ChannelDeliveryResult;
-  whatsappUrl?: string;
-  mailtoUrl?: string;
-  gmailUrl?: string;
-}
 
 interface BookingModalProps {
   draft: BookingDraft | null;
@@ -90,7 +69,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
   const [processingState, setProcessingState] = useState<'idle' | 'processing' | 'done'>('idle');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [generatedRef, setGeneratedRef] = useState('');
-  const [dispatchResult, setDispatchResult] = useState<BookingDispatchResponse | null>(null);
+  const [dispatchResult, setDispatchResult] = useState<ApiDispatchResult | null>(null);
 
   useEffect(() => {
     if (!draft) return;
@@ -149,78 +128,58 @@ export const BookingModal: React.FC<BookingModalProps> = ({
     const newRef = `#CH-2025-${Math.floor(9510 + Math.random() * 480)}`;
     const resolvedMethod = resolvePaymentLabel(mode);
 
-    try {
-      const response = await fetch('/api/bookings/dispatch', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ref: newRef,
-          channel: dispatchChannel,
-          guestName: cleanName,
-          guestPhone: cleanPhone,
-          guestEmail: cleanEmail,
-          buildingName: draft.buildingName,
-          roomNumber: draft.roomNumber,
-          suiteTitle: draft.suiteTitle,
-          checkInDate: draft.checkInDate,
-          checkOutDate: draft.checkOutDate,
-          nights: draft.nights,
-          guestsLabel: draft.guestsLabel,
-          totalAmount: totalPayable,
-          paymentMethod: resolvedMethod,
-          notes: notes.trim(),
-        }),
-      });
+    const data = await dispatchBookingRequest({
+      ref: newRef,
+      channel: dispatchChannel,
+      guestName: cleanName,
+      guestPhone: cleanPhone,
+      guestEmail: cleanEmail,
+      buildingName: draft.buildingName,
+      roomNumber: draft.roomNumber,
+      suiteTitle: draft.suiteTitle,
+      checkInDate: draft.checkInDate,
+      checkOutDate: draft.checkOutDate,
+      nights: draft.nights,
+      guestsLabel: draft.guestsLabel,
+      totalAmount: totalPayable,
+      paymentMethod: resolvedMethod,
+      notes: notes.trim(),
+    });
 
-      const rawBody = await response.text();
-      let data: BookingDispatchResponse | null = null;
-      try {
-        data = JSON.parse(rawBody) as BookingDispatchResponse;
-      } catch {
-        data = null;
-      }
-
-      if (!response.ok || !data?.ok) {
-        setProcessingState('idle');
-        setErrorMessage(
-          data?.error ||
-            `Booking API returned HTTP ${response.status}. Please verify your inputs and try again.`
-        );
-        return;
-      }
-
-      const booking: GuestBooking = {
-        id: `bk-${Date.now()}`,
-        ref: newRef,
-        guestName: cleanName,
-        guestPhone: cleanPhone,
-        guestEmail: cleanEmail || CONTACT_DETAILS.email,
-        buildingName: draft.buildingName,
-        buildingSlug: draft.buildingSlug,
-        roomNumber: draft.roomNumber,
-        suiteTitle: `${draft.suiteTitle} ${draft.roomNumber}`,
-        checkInDate: draft.checkInDate,
-        checkOutDate: draft.checkOutDate,
-        nights: draft.nights,
-        guestsLabel: draft.guestsLabel,
-        isMemberRate: draft.isMemberMode,
-        voucherCode: voucherApplied ? voucher.trim().toUpperCase() : undefined,
-        totalAmount: totalPayable,
-        paymentMethod: resolvedMethod,
-        dispatchId: data.dispatchId,
-        bookingChannel: dispatchChannel,
-        status: mode === 'hold' ? 'Hold Pending' : 'Confirmed',
-        createdAt: 'Just now',
-      };
-
-      setGeneratedRef(newRef);
-      setDispatchResult(data);
-      onConfirmBooking(booking);
-      setProcessingState('done');
-    } catch {
+    if (!data.ok) {
       setProcessingState('idle');
-      setErrorMessage('Unable to reach the Sanctuary booking API. Please try again.');
+      setErrorMessage(data.error || 'Could not dispatch booking. Please verify your inputs.');
+      return;
     }
+
+    const booking: GuestBooking = {
+      id: `bk-${Date.now()}`,
+      ref: newRef,
+      guestName: cleanName,
+      guestPhone: cleanPhone,
+      guestEmail: cleanEmail || CONTACT_DETAILS.email,
+      buildingName: draft.buildingName,
+      buildingSlug: draft.buildingSlug,
+      roomNumber: draft.roomNumber,
+      suiteTitle: `${draft.suiteTitle} ${draft.roomNumber}`,
+      checkInDate: draft.checkInDate,
+      checkOutDate: draft.checkOutDate,
+      nights: draft.nights,
+      guestsLabel: draft.guestsLabel,
+      isMemberRate: draft.isMemberMode,
+      voucherCode: voucherApplied ? voucher.trim().toUpperCase() : undefined,
+      totalAmount: totalPayable,
+      paymentMethod: resolvedMethod,
+      dispatchId: data.dispatchId,
+      bookingChannel: dispatchChannel,
+      status: mode === 'hold' ? 'Hold Pending' : 'Confirmed',
+      createdAt: 'Just now',
+    };
+
+    setGeneratedRef(newRef);
+    setDispatchResult(data);
+    onConfirmBooking(booking);
+    setProcessingState('done');
   };
 
   return (
@@ -263,7 +222,9 @@ export const BookingModal: React.FC<BookingModalProps> = ({
             </div>
             <div>
               <p className="font-serif-display text-xl font-semibold text-primary">
-                Booking Sent via Sanctuary API
+                {dispatchResult.fallbackUsed
+                  ? 'Reservation Recorded · Direct Links Ready'
+                  : 'Booking Sent via Sanctuary API'}
               </p>
               <p className="text-sm text-on-surface-variant mt-1">
                 Ref <span className="font-mono font-semibold text-primary">{generatedRef}</span>
@@ -301,7 +262,6 @@ export const BookingModal: React.FC<BookingModalProps> = ({
               </div>
             </div>
 
-            {/* Real API Channel Delivery Breakdown */}
             <div className="w-full space-y-2 text-left">
               <p className="text-[11px] font-bold uppercase tracking-wider text-on-surface-variant">
                 Desk API Delivery Status
@@ -328,8 +288,8 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                   >
                     {dispatchResult.whatsappResult.status === 'sent'
                       ? 'Delivered'
-                      : dispatchResult.whatsappResult.status === 'error'
-                      ? 'Fallback Ready'
+                      : dispatchResult.fallbackUsed
+                      ? 'Direct Link Ready'
                       : 'API Dispatched'}
                   </span>
                 </div>
@@ -357,15 +317,14 @@ export const BookingModal: React.FC<BookingModalProps> = ({
                   >
                     {dispatchResult.emailResult.status === 'sent'
                       ? 'Delivered'
-                      : dispatchResult.emailResult.status === 'error'
-                      ? 'Fallback Ready'
+                      : dispatchResult.fallbackUsed
+                      ? 'Direct Link Ready'
                       : 'API Dispatched'}
                   </span>
                 </div>
               )}
             </div>
 
-            {/* Direct WhatsApp & Email App Deep-Links */}
             <div className="w-full flex flex-wrap gap-2">
               {isSafeActionUrl(dispatchResult.whatsappUrl, 'https://wa.me/') && (
                 <a
@@ -434,7 +393,6 @@ export const BookingModal: React.FC<BookingModalProps> = ({
               </div>
             </div>
 
-            {/* Destination Desk Contact Banner */}
             <div className="p-3 rounded-xl bg-secondary-container/20 border border-secondary/20 text-xs space-y-1">
               <p className="font-semibold text-primary flex items-center gap-1.5">
                 <Send className="w-3.5 h-3.5 text-secondary shrink-0" />

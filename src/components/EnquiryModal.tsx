@@ -11,35 +11,17 @@ import {
   X,
 } from 'lucide-react';
 import { CONTACT_DETAILS } from '../data/sanctuaryData';
+import {
+  ApiDispatchResult,
+  DispatchChannel,
+  dispatchEnquiryRequest,
+} from '../utils/bookingApi';
 
 export interface EnquiryDraft {
   subject?: string;
   buildingName?: string;
   roomNumber?: string;
   presetMessage?: string;
-}
-
-type DispatchChannel = 'both' | 'whatsapp' | 'email';
-
-interface ChannelDeliveryResult {
-  requested: boolean;
-  status: 'sent' | 'dispatched_relay' | 'skipped' | 'error';
-  recipient: string;
-  provider: string;
-  detail: string;
-}
-
-interface EnquiryResponse {
-  ok: boolean;
-  error?: string;
-  ticketRef?: string;
-  timestamp?: string;
-  channel?: DispatchChannel;
-  emailResult?: ChannelDeliveryResult;
-  whatsappResult?: ChannelDeliveryResult;
-  whatsappUrl?: string;
-  mailtoUrl?: string;
-  gmailUrl?: string;
 }
 
 interface EnquiryModalProps {
@@ -68,7 +50,7 @@ export const EnquiryModal: React.FC<EnquiryModalProps> = ({
   const [channel, setChannel] = useState<DispatchChannel>('both');
   const [status, setStatus] = useState<'idle' | 'sending' | 'done'>('idle');
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [responseData, setResponseData] = useState<EnquiryResponse | null>(null);
+  const [responseData, setResponseData] = useState<ApiDispatchResult | null>(null);
 
   useEffect(() => {
     if (!draft) return;
@@ -99,48 +81,29 @@ export const EnquiryModal: React.FC<EnquiryModalProps> = ({
     }
 
     setStatus('sending');
-    try {
-      const resp = await fetch('/api/enquiries', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          channel,
-          guestName: guestName.trim(),
-          guestPhone: guestPhone.trim(),
-          guestEmail: guestEmail.trim(),
-          subject: subject.trim(),
-          buildingName: draft.buildingName || '',
-          roomNumber: draft.roomNumber || '',
-          message: message.trim(),
-        }),
-      });
+    const data = await dispatchEnquiryRequest({
+      channel,
+      guestName: guestName.trim(),
+      guestPhone: guestPhone.trim(),
+      guestEmail: guestEmail.trim(),
+      subject: subject.trim(),
+      buildingName: draft.buildingName || '',
+      roomNumber: draft.roomNumber || '',
+      message: message.trim(),
+    });
 
-      const rawBody = await resp.text();
-      let data: EnquiryResponse | null = null;
-      try {
-        data = JSON.parse(rawBody) as EnquiryResponse;
-      } catch {
-        data = null;
-      }
-
-      if (!resp.ok || !data?.ok) {
-        setStatus('idle');
-        setErrorMessage(
-          data?.error || `Enquiry API returned HTTP ${resp.status}. Please try again.`
-        );
-        return;
-      }
-
-      setResponseData(data);
-      setStatus('done');
-      onSubmitted(
-        data.ticketRef || 'ENQ',
-        `${guestName.trim()} (${channel.toUpperCase()}) · ${subject.trim()}`
-      );
-    } catch {
+    if (!data.ok) {
       setStatus('idle');
-      setErrorMessage('Network error contacting Sanctuary enquiry API.');
+      setErrorMessage(data.error || 'Unable to dispatch enquiry.');
+      return;
     }
+
+    setResponseData(data);
+    setStatus('done');
+    onSubmitted(
+      data.ticketRef || 'ENQ',
+      `${guestName.trim()} (${channel.toUpperCase()}) · ${subject.trim()}`
+    );
   };
 
   return (
@@ -159,7 +122,7 @@ export const EnquiryModal: React.FC<EnquiryModalProps> = ({
             </div>
             <div>
               <h3 className="font-serif-display text-lg font-semibold text-primary">
-                {status === 'done' ? 'Enquiry Sent via API' : 'Book or Enquire via Email & WhatsApp'}
+                {status === 'done' ? 'Enquiry Ready & Logged' : 'Book or Enquire via Email & WhatsApp'}
               </h3>
               <p className="text-xs text-on-surface-variant">
                 {draft.buildingName
@@ -185,10 +148,10 @@ export const EnquiryModal: React.FC<EnquiryModalProps> = ({
             </div>
             <div>
               <p className="font-serif-display text-xl font-semibold text-primary">
-                Ticket {responseData.ticketRef} Dispatched
+                Ticket {responseData.ticketRef} {responseData.fallbackUsed ? 'Prepared' : 'Dispatched'}
               </p>
               <p className="text-xs text-on-surface-variant mt-1">
-                Delivered to Sanctuary Hospitality Desk ({CONTACT_DETAILS.phone} &amp; {CONTACT_DETAILS.email})
+                Ready for Sanctuary Hospitality Desk ({CONTACT_DETAILS.phone} &amp; {CONTACT_DETAILS.email})
               </p>
             </div>
 
@@ -204,7 +167,11 @@ export const EnquiryModal: React.FC<EnquiryModalProps> = ({
                     </p>
                   </div>
                   <span className="px-2 py-0.5 rounded-md bg-[#ebf7ee] text-[#1c6934] text-[10px] font-bold shrink-0">
-                    {responseData.whatsappResult.status === 'sent' ? 'Sent' : 'Dispatched'}
+                    {responseData.whatsappResult.status === 'sent'
+                      ? 'Sent'
+                      : responseData.fallbackUsed
+                      ? 'Direct Link Ready'
+                      : 'Dispatched'}
                   </span>
                 </div>
               )}
@@ -219,7 +186,11 @@ export const EnquiryModal: React.FC<EnquiryModalProps> = ({
                     </p>
                   </div>
                   <span className="px-2 py-0.5 rounded-md bg-[#ebf7ee] text-[#1c6934] text-[10px] font-bold shrink-0">
-                    {responseData.emailResult.status === 'sent' ? 'Sent' : 'Dispatched'}
+                    {responseData.emailResult.status === 'sent'
+                      ? 'Sent'
+                      : responseData.fallbackUsed
+                      ? 'Direct Link Ready'
+                      : 'Dispatched'}
                   </span>
                 </div>
               )}
