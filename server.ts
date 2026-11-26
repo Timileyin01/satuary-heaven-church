@@ -1,5 +1,6 @@
 import 'dotenv/config';
-import express, { Request, Response } from 'express';
+import express from 'express';
+import type { Request, Response } from 'express';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -334,10 +335,14 @@ async function startServer() {
       summary: `${ref} · ${buildingName} Rm ${roomNumber}`,
     });
 
+    const bookingSubject = `Sanctuary Haven Booking ${ref} — ${buildingName} Rm ${roomNumber}`;
     const whatsappUrl = `https://wa.me/${toWhatsappIntl(DEST_PHONE)}?text=${encodeURIComponent(plainText)}`;
     const mailtoUrl = `mailto:${encodeURIComponent(DEST_EMAIL)}?subject=${encodeURIComponent(
-      `Sanctuary Haven Booking ${ref} — ${buildingName} Rm ${roomNumber}`
+      bookingSubject
     )}&body=${encodeURIComponent(plainText)}`;
+    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(
+      DEST_EMAIL
+    )}&su=${encodeURIComponent(bookingSubject)}&body=${encodeURIComponent(plainText)}`;
 
     res.status(201).json({
       ok: true,
@@ -352,6 +357,7 @@ async function startServer() {
       whatsappResult,
       whatsappUrl,
       mailtoUrl,
+      gmailUrl,
     });
   });
 
@@ -454,10 +460,14 @@ async function startServer() {
       summary: subject,
     });
 
+    const enquirySubject = `[Enquiry ${ticketRef}] ${subject}`;
     const whatsappUrl = `https://wa.me/${toWhatsappIntl(DEST_PHONE)}?text=${encodeURIComponent(plainText)}`;
     const mailtoUrl = `mailto:${encodeURIComponent(DEST_EMAIL)}?subject=${encodeURIComponent(
-      `[Enquiry ${ticketRef}] ${subject}`
+      enquirySubject
     )}&body=${encodeURIComponent(plainText)}`;
+    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(
+      DEST_EMAIL
+    )}&su=${encodeURIComponent(enquirySubject)}&body=${encodeURIComponent(plainText)}`;
 
     res.status(201).json({
       ok: true,
@@ -472,7 +482,12 @@ async function startServer() {
       whatsappResult,
       whatsappUrl,
       mailtoUrl,
+      gmailUrl,
     });
+  });
+
+  app.use('/api', (_req: Request, res: Response) => {
+    res.status(404).json({ ok: false, error: 'API endpoint not found.' });
   });
 
   if (process.env.NODE_ENV !== 'production') {
@@ -486,7 +501,7 @@ async function startServer() {
     const distDir = path.resolve(__dirname, 'dist');
     if (fs.existsSync(distDir)) {
       app.use(express.static(distDir));
-      app.get('*', (_req, res) => {
+      app.get('*', (_req: Request, res: Response) => {
         res.sendFile(path.join(distDir, 'index.html'));
       });
     }

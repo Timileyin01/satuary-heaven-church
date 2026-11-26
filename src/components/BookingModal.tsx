@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   AlertCircle,
   CheckCircle2,
@@ -58,6 +58,7 @@ interface BookingDispatchResponse {
   whatsappResult?: ChannelDeliveryResult;
   whatsappUrl?: string;
   mailtoUrl?: string;
+  gmailUrl?: string;
 }
 
 interface BookingModalProps {
@@ -66,7 +67,10 @@ interface BookingModalProps {
   onConfirmBooking: (booking: GuestBooking) => void;
 }
 
-function isSafeActionUrl(url: string | undefined, expectedPrefix: 'https://wa.me/' | 'mailto:'): url is string {
+function isSafeActionUrl(
+  url: string | undefined,
+  expectedPrefix: 'https://wa.me/' | 'https://mail.google.com/mail/' | 'mailto:'
+): url is string {
   return typeof url === 'string' && url.startsWith(expectedPrefix);
 }
 
@@ -87,6 +91,17 @@ export const BookingModal: React.FC<BookingModalProps> = ({
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [generatedRef, setGeneratedRef] = useState('');
   const [dispatchResult, setDispatchResult] = useState<BookingDispatchResponse | null>(null);
+
+  useEffect(() => {
+    if (!draft) return;
+    setProcessingState('idle');
+    setErrorMessage(null);
+    setDispatchResult(null);
+    setGeneratedRef('');
+    setNotes('');
+    setVoucher(draft.voucherCode || '');
+    setVoucherApplied(Boolean(draft.voucherCode));
+  }, [draft]);
 
   if (!draft) return null;
 
@@ -157,11 +172,20 @@ export const BookingModal: React.FC<BookingModalProps> = ({
         }),
       });
 
-      const data = (await response.json()) as BookingDispatchResponse;
+      const rawBody = await response.text();
+      let data: BookingDispatchResponse | null = null;
+      try {
+        data = JSON.parse(rawBody) as BookingDispatchResponse;
+      } catch {
+        data = null;
+      }
 
-      if (!response.ok || !data.ok) {
+      if (!response.ok || !data?.ok) {
         setProcessingState('idle');
-        setErrorMessage(data.error || 'Could not dispatch booking. Please verify your inputs.');
+        setErrorMessage(
+          data?.error ||
+            `Booking API returned HTTP ${response.status}. Please verify your inputs and try again.`
+        );
         return;
       }
 
@@ -342,27 +366,40 @@ export const BookingModal: React.FC<BookingModalProps> = ({
             </div>
 
             {/* Direct WhatsApp & Email App Deep-Links */}
-            <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-2">
+            <div className="w-full flex flex-wrap gap-2">
               {isSafeActionUrl(dispatchResult.whatsappUrl, 'https://wa.me/') && (
                 <a
                   href={dispatchResult.whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="h-10 px-3 rounded-xl bg-[#1c6934] hover:bg-[#155429] text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors"
+                  className="flex-1 min-w-[170px] h-10 px-3 rounded-xl bg-[#1c6934] hover:bg-[#155429] text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors"
                 >
                   <MessageSquare className="w-3.5 h-3.5" />
                   <span>Open WhatsApp ({CONTACT_DETAILS.phone})</span>
                   <ExternalLink className="w-3 h-3 opacity-80" />
                 </a>
               )}
+              {isSafeActionUrl(dispatchResult.gmailUrl, 'https://mail.google.com/mail/') && (
+                <a
+                  href={dispatchResult.gmailUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 min-w-[140px] h-10 px-3 rounded-xl bg-secondary hover:bg-secondary/90 text-on-secondary text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors"
+                >
+                  <Mail className="w-3.5 h-3.5" />
+                  <span>Send via Gmail</span>
+                  <ExternalLink className="w-3 h-3 opacity-80" />
+                </a>
+              )}
               {isSafeActionUrl(dispatchResult.mailtoUrl, 'mailto:') && (
                 <a
                   href={dispatchResult.mailtoUrl}
-                  className="h-10 px-3 rounded-xl bg-secondary hover:bg-secondary/90 text-on-secondary text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="h-10 px-3 rounded-xl bg-surface-container hover:bg-surface-container-high text-primary text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors"
                 >
-                  <Mail className="w-3.5 h-3.5" />
-                  <span>Open Email Draft</span>
-                  <ExternalLink className="w-3 h-3 opacity-80" />
+                  <Mail className="w-3.5 h-3.5 text-secondary" />
+                  <span>Mail App</span>
                 </a>
               )}
             </div>

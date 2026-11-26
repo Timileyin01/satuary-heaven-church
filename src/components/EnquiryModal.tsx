@@ -39,6 +39,7 @@ interface EnquiryResponse {
   whatsappResult?: ChannelDeliveryResult;
   whatsappUrl?: string;
   mailtoUrl?: string;
+  gmailUrl?: string;
 }
 
 interface EnquiryModalProps {
@@ -47,7 +48,10 @@ interface EnquiryModalProps {
   onSubmitted: (ticketRef: string, summary: string) => void;
 }
 
-function isSafeActionUrl(url: string | undefined, expectedPrefix: 'https://wa.me/' | 'mailto:'): url is string {
+function isSafeActionUrl(
+  url: string | undefined,
+  expectedPrefix: 'https://wa.me/' | 'https://mail.google.com/mail/' | 'mailto:'
+): url is string {
   return typeof url === 'string' && url.startsWith(expectedPrefix);
 }
 
@@ -111,10 +115,19 @@ export const EnquiryModal: React.FC<EnquiryModalProps> = ({
         }),
       });
 
-      const data = (await resp.json()) as EnquiryResponse;
-      if (!resp.ok || !data.ok) {
+      const rawBody = await resp.text();
+      let data: EnquiryResponse | null = null;
+      try {
+        data = JSON.parse(rawBody) as EnquiryResponse;
+      } catch {
+        data = null;
+      }
+
+      if (!resp.ok || !data?.ok) {
         setStatus('idle');
-        setErrorMessage(data.error || 'Unable to dispatch enquiry.');
+        setErrorMessage(
+          data?.error || `Enquiry API returned HTTP ${resp.status}. Please try again.`
+        );
         return;
       }
 
@@ -212,27 +225,40 @@ export const EnquiryModal: React.FC<EnquiryModalProps> = ({
               )}
             </div>
 
-            <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-2">
+            <div className="w-full flex flex-wrap gap-2">
               {isSafeActionUrl(responseData.whatsappUrl, 'https://wa.me/') && (
                 <a
                   href={responseData.whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="h-10 px-3 rounded-xl bg-[#1c6934] hover:bg-[#155429] text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors"
+                  className="flex-1 min-w-[170px] h-10 px-3 rounded-xl bg-[#1c6934] hover:bg-[#155429] text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors"
                 >
                   <MessageSquare className="w-3.5 h-3.5" />
                   <span>Continue on WhatsApp</span>
                   <ExternalLink className="w-3 h-3 opacity-80" />
                 </a>
               )}
+              {isSafeActionUrl(responseData.gmailUrl, 'https://mail.google.com/mail/') && (
+                <a
+                  href={responseData.gmailUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 min-w-[140px] h-10 px-3 rounded-xl bg-secondary hover:bg-secondary/90 text-on-secondary text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors"
+                >
+                  <Mail className="w-3.5 h-3.5" />
+                  <span>Send via Gmail</span>
+                  <ExternalLink className="w-3 h-3 opacity-80" />
+                </a>
+              )}
               {isSafeActionUrl(responseData.mailtoUrl, 'mailto:') && (
                 <a
                   href={responseData.mailtoUrl}
-                  className="h-10 px-3 rounded-xl bg-secondary hover:bg-secondary/90 text-on-secondary text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="h-10 px-3 rounded-xl bg-surface-container hover:bg-surface-container-high text-primary text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors"
                 >
-                  <Mail className="w-3.5 h-3.5" />
-                  <span>Open Email Client</span>
-                  <ExternalLink className="w-3 h-3 opacity-80" />
+                  <Mail className="w-3.5 h-3.5 text-secondary" />
+                  <span>Mail App</span>
                 </a>
               )}
             </div>
