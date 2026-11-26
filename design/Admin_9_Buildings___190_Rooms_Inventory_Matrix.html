@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&amp;family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100vw;margin:0;padding:0;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "tertiary-fixed": "#d7e7d1", "background": "#fdf9f1", "primary-fixed-dim": "#aacfba", "inverse-primary": "#aacfba", "surface-container-lowest": "#ffffff", "primary": "#002215", "on-primary-fixed-variant": "#2d4d3d", "tertiary": "#132012", "primary-fixed": "#c6ebd5", "on-primary-fixed": "#002114", "primary-container": "#173829", "surface-container-low": "#f7f3eb", "inverse-on-surface": "#f4f0e8", "secondary-container": "#ffd083", "surface-container": "#f1ede5", "tertiary-fixed-dim": "#bbcbb6", "secondary-fixed-dim": "#edbf75", "on-secondary": "#ffffff", "surface-bright": "#fdf9f1", "surface": "#fdf9f1", "surface-container-highest": "#e6e2da", "on-secondary-fixed": "#281900", "on-secondary-fixed-variant": "#5f4100", "on-secondary-container": "#795716", "on-primary": "#ffffff", "on-primary-container": "#7fa28e", "surface-tint": "#446554", "error": "#ba1a1a", "on-tertiary": "#ffffff", "surface-container-high": "#ece8e0", "on-background": "#1c1c17", "on-tertiary-fixed": "#111f11", "secondary": "#7a5817", "surface-variant": "#e6e2da", "on-surface": "#1c1c17", "on-tertiary-container": "#8e9e8a", "outline-variant": "#c1c8c2", "on-surface-variant": "#414844", "tertiary-container": "#273526", "secondary-fixed": "#ffdeac", "on-error": "#ffffff", "inverse-surface": "#31302b", "outline": "#727973", "on-tertiary-fixed-variant": "#3c4b3a", "error-container": "#ffdad6", "surface-dim": "#dddad2", "on-error-container": "#93000a" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-md": "1rem", "gutter": "1.5rem", "gutter-sm": "1rem", "margin-sm": "1rem", "space-xl": "2.5rem", "space-xs": "0.25rem", "space-sm": "0.5rem", "space-lg": "1.5rem", "margin": "2.5rem" }, "fontFamily": { "title-md": ["Plus Jakarta Sans"], "headline-lg": ["Playfair Display"], "body-lg": ["Plus Jakarta Sans"], "headline-md": ["Playfair Display"], "body-md": ["Plus Jakarta Sans"], "display-mobile": ["Playfair Display"], "headline-lg-mobile": ["Playfair Display"], "label-sm": ["Plus Jakarta Sans"], "body-sm": ["Plus Jakarta Sans"], "headline-sm": ["Playfair Display"], "display": ["Playfair Display"], "label-md": ["Plus Jakarta Sans"], "title-lg": ["Plus Jakarta Sans"] }, "fontSize": { "title-md": ["16px", { "lineHeight": "24px", "fontWeight": "600" }], "headline-lg": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.01em", "fontWeight": "500" }], "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }], "headline-md": ["28px", { "lineHeight": "36px", "fontWeight": "500" }], "body-md": ["15px", { "lineHeight": "22px", "fontWeight": "400" }], "display-mobile": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "headline-lg-mobile": ["28px", { "lineHeight": "36px", "fontWeight": "500" }], "label-sm": ["11px", { "lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "600" }], "body-sm": ["13px", { "lineHeight": "18px", "fontWeight": "400" }], "headline-sm": ["22px", { "lineHeight": "30px", "fontWeight": "600" }], "display": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "600" }], "label-md": ["13px", { "lineHeight": "18px", "letterSpacing": "0.02em", "fontWeight": "600" }], "title-lg": ["18px", { "lineHeight": "26px", "fontWeight": "600" }] } } } };</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface font-body-md text-on-surface antialiased flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(23,56,41,0.04)] pt-safe"><div class="h-20 px-gutter-sm flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-sm min-w-0"><img alt="Sanctuary Haven Logo" class="h-8 w-auto object-contain flex-shrink-0" src="https://lh3.googleusercontent.com/aida/ALJJyrC_fmh8Mxne5ABzQGGu6cbWTjZyiAvkGrBF8uYte4WHAx37xR4WT37R7xjJ0lPjYC3avBT9KwiLg5lcNrCjZrhQ-HIJEw6jV-md-iIkDv1QW9JGExkCHHhBalkdcBssFJZbS4RBCGzTE7z-FI3-yagAkK31Ytp_fRIh0JnEBJbsEd3YukWVQ5cIoqeiDKHL1ufsrmUP7en1V7UdnNE6HpYyyhSZ4CmWVLs0ZexZVKWBWg"/><div class="flex flex-col min-w-0"><span class="font-headline-sm text-headline-sm text-primary tracking-tight truncate leading-tight">Sanctuary Haven</span><span class="font-label-sm text-label-sm text-secondary tracking-normal truncate uppercase">Church Hospitality &amp; Lodging</span></div></div><div class="flex items-center gap-space-xs flex-shrink-0"><button aria-label="Switch view mode" class="h-11 px-space-sm rounded-full bg-surface-container-low text-on-surface flex items-center gap-space-xs hover:bg-surface-container transition-colors"><span class="material-symbols-outlined text-[18px] text-secondary">swap_horiz</span><span class="font-label-sm text-label-sm font-semibold text-primary hidden sm:inline">Mode</span></button><button aria-label="Notifications" class="w-11 h-11 rounded-full flex items-center justify-center text-on-surface hover:bg-surface-container-low transition-colors relative"><span class="material-symbols-outlined text-[22px]">notifications</span><span class="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-secondary"></span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex flex-col relative w-full pt-20 pb-24 bg-surface min-h-screen"><div class="flex flex-col w-full">
+<!-- Top Operational Banner & Stats Overview -->
+<section class="px-gutter-sm pt-space-xs pb-space-sm flex flex-col gap-space-sm bg-surface-container-low">
+<div class="flex items-center justify-between gap-space-sm">
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-space-xs">
+<span class="font-headline-sm text-headline-sm text-primary tracking-tight">Room Inventory Matrix</span>
+<span class="px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm font-semibold">Live 190</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">9 Buildings • 3 Conventions • 16 Pending Turnovers</p>
+</div>
+<div class="flex items-center gap-space-xs flex-shrink-0">
+<button class="h-9 px-3 rounded-lg bg-surface-container-lowest shadow-sm text-primary font-label-md text-label-md flex items-center gap-1.5 active:scale-95 transition-all" id="batchModeBtn">
+<span class="material-symbols-outlined text-[18px] text-secondary">checklist</span>
+<span>Batch</span>
+</button>
+<button class="h-9 px-3.5 rounded-lg bg-primary text-on-primary font-label-md text-label-md flex items-center gap-1.5 shadow-sm active:scale-95 transition-all" id="addRoomBtn">
+<span class="material-symbols-outlined text-[18px]">add</span>
+<span>Room</span>
+</button>
+</div>
+</div>
+<!-- Quick Search & Smart Filter Bar -->
+<div class="relative w-full">
+<div class="flex items-center rounded-xl bg-surface-container-lowest px-3 py-2 shadow-sm gap-2">
+<span class="material-symbols-outlined text-outline text-[20px]">search</span>
+<input class="w-full bg-transparent text-on-surface placeholder:text-outline text-body-md font-body-md focus:outline-none" id="matrixSearchInput" placeholder="Search room (e.g. 104, 201), guest name, or lodge..." type="search"/>
+<button aria-label="Filter Matrix" class="p-1 rounded-lg text-on-surface-variant hover:bg-surface-container transition-colors flex items-center">
+<span class="material-symbols-outlined text-[20px]">tune</span>
+</button>
+</div>
+</div>
+<!-- Real-time Status Metric Counters -->
+<div class="flex items-center gap-1.5 overflow-x-auto pb-1 pt-0.5 no-scrollbar">
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary-container text-on-primary font-label-sm text-label-sm shadow-sm flex-shrink-0">
+<span class="w-2 h-2 rounded-full bg-primary-fixed"></span>
+<span>Occupied</span>
+<span class="ml-1 font-bold text-primary-fixed">128</span>
+</button>
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container-lowest text-primary font-label-sm text-label-sm shadow-sm flex-shrink-0">
+<span class="w-2 h-2 rounded-full bg-[#34784a]"></span>
+<span class="text-on-surface">Available</span>
+<span class="ml-1 font-bold text-[#1f6335]">38</span>
+</button>
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container-lowest text-on-surface font-label-sm text-label-sm shadow-sm flex-shrink-0">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span>Reserved</span>
+<span class="ml-1 font-bold text-secondary">15</span>
+</button>
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container-lowest text-on-surface font-label-sm text-label-sm shadow-sm flex-shrink-0">
+<span class="w-2 h-2 rounded-full bg-error"></span>
+<span>Turnover</span>
+<span class="ml-1 font-bold text-error">7</span>
+</button>
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container-lowest text-on-surface-variant font-label-sm text-label-sm shadow-sm flex-shrink-0">
+<span class="w-2 h-2 rounded-full bg-outline"></span>
+<span>Locked</span>
+<span class="ml-1 font-bold text-outline">2</span>
+</button>
+</div>
+</section>
+<!-- Buildings Horizontal Navigation Slider -->
+<div class="w-full bg-surface py-2.5 px-gutter-sm">
+<div class="flex items-center justify-between mb-1.5">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary font-semibold">Parish &amp; Diocesan Lodges (9)</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Avg Occupancy: <strong class="text-primary">82%</strong></span>
+</div>
+<div class="flex gap-2 overflow-x-auto pb-1 no-scrollbar -mx-gutter-sm px-gutter-sm" id="buildingTabContainer">
+<button class="building-tab flex flex-col items-start px-3 py-2 rounded-xl bg-primary text-on-primary flex-shrink-0 min-w-[124px] shadow-sm transition-all text-left" data-bld="all">
+<div class="flex items-center justify-between w-full">
+<span class="font-label-sm text-label-sm opacity-80">ALL LODGES</span>
+<span class="material-symbols-outlined text-[16px] text-primary-fixed">domain</span>
+</div>
+<span class="font-title-md text-title-md mt-0.5">190 Rooms</span>
+<span class="font-label-sm text-label-sm text-primary-fixed mt-0.5">38 Free</span>
+</button>
+<button class="building-tab flex flex-col items-start px-3 py-2 rounded-xl bg-surface-container-lowest text-on-surface flex-shrink-0 min-w-[130px] shadow-sm transition-all text-left" data-bld="BLD-01">
+<div class="flex items-center justify-between w-full">
+<span class="font-label-sm text-label-sm text-secondary font-semibold">BLD-01</span>
+<span class="w-2 h-2 rounded-full bg-primary-container"></span>
+</div>
+<span class="font-title-md text-title-md mt-0.5 truncate w-full">Bethel House</span>
+<div class="flex items-center justify-between w-full mt-0.5 font-label-sm text-label-sm text-on-surface-variant">
+<span>22/24 Occ.</span>
+<span class="text-primary font-bold">92%</span>
+</div>
+</button>
+<button class="building-tab flex flex-col items-start px-3 py-2 rounded-xl bg-surface-container-lowest text-on-surface flex-shrink-0 min-w-[130px] shadow-sm transition-all text-left" data-bld="BLD-02">
+<div class="flex items-center justify-between w-full">
+<span class="font-label-sm text-label-sm text-secondary font-semibold">BLD-02</span>
+<span class="w-2 h-2 rounded-full bg-primary-container"></span>
+</div>
+<span class="font-title-md text-title-md mt-0.5 truncate w-full">Mt Zion Lodge</span>
+<div class="flex items-center justify-between w-full mt-0.5 font-label-sm text-label-sm text-on-surface-variant">
+<span>25/28 Occ.</span>
+<span class="text-primary font-bold">89%</span>
+</div>
+</button>
+<button class="building-tab flex flex-col items-start px-3 py-2 rounded-xl bg-surface-container-lowest text-on-surface flex-shrink-0 min-w-[130px] shadow-sm transition-all text-left" data-bld="BLD-03">
+<div class="flex items-center justify-between w-full">
+<span class="font-label-sm text-label-sm text-secondary font-semibold">BLD-03</span>
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+</div>
+<span class="font-title-md text-title-md mt-0.5 truncate w-full">Grace Haven</span>
+<div class="flex items-center justify-between w-full mt-0.5 font-label-sm text-label-sm text-on-surface-variant">
+<span>18/22 Occ.</span>
+<span class="text-primary font-bold">81%</span>
+</div>
+</button>
+<button class="building-tab flex flex-col items-start px-3 py-2 rounded-xl bg-surface-container-lowest text-on-surface flex-shrink-0 min-w-[130px] shadow-sm transition-all text-left" data-bld="BLD-04">
+<div class="flex items-center justify-between w-full">
+<span class="font-label-sm text-label-sm text-secondary font-semibold">BLD-04</span>
+<span class="w-2 h-2 rounded-full bg-primary-container"></span>
+</div>
+<span class="font-title-md text-title-md mt-0.5 truncate w-full">Shiloh Pavilion</span>
+<div class="flex items-center justify-between w-full mt-0.5 font-label-sm text-label-sm text-on-surface-variant">
+<span>24/26 Occ.</span>
+<span class="text-primary font-bold">92%</span>
+</div>
+</button>
+<button class="building-tab flex flex-col items-start px-3 py-2 rounded-xl bg-surface-container-lowest text-on-surface flex-shrink-0 min-w-[130px] shadow-sm transition-all text-left" data-bld="BLD-05">
+<div class="flex items-center justify-between w-full">
+<span class="font-label-sm text-label-sm text-secondary font-semibold">BLD-05</span>
+<span class="w-2 h-2 rounded-full bg-outline"></span>
+</div>
+<span class="font-title-md text-title-md mt-0.5 truncate w-full">Ebenezer Hall</span>
+<div class="flex items-center justify-between w-full mt-0.5 font-label-sm text-label-sm text-on-surface-variant">
+<span>12/20 Occ.</span>
+<span class="text-primary font-bold">60%</span>
+</div>
+</button>
+<button class="building-tab flex flex-col items-start px-3 py-2 rounded-xl bg-surface-container-lowest text-on-surface flex-shrink-0 min-w-[130px] shadow-sm transition-all text-left" data-bld="BLD-06">
+<div class="flex items-center justify-between w-full">
+<span class="font-label-sm text-label-sm text-secondary font-semibold">BLD-06</span>
+<span class="w-2 h-2 rounded-full bg-primary-container"></span>
+</div>
+<span class="font-title-md text-title-md mt-0.5 truncate w-full">Moriah Court</span>
+<div class="flex items-center justify-between w-full mt-0.5 font-label-sm text-label-sm text-on-surface-variant">
+<span>15/18 Occ.</span>
+<span class="text-primary font-bold">83%</span>
+</div>
+</button>
+<button class="building-tab flex flex-col items-start px-3 py-2 rounded-xl bg-surface-container-lowest text-on-surface flex-shrink-0 min-w-[130px] shadow-sm transition-all text-left" data-bld="BLD-07">
+<div class="flex items-center justify-between w-full">
+<span class="font-label-sm text-label-sm text-secondary font-semibold">BLD-07</span>
+<span class="w-2 h-2 rounded-full bg-outline"></span>
+</div>
+<span class="font-title-md text-title-md mt-0.5 truncate w-full">Peniel Court</span>
+<div class="flex items-center justify-between w-full mt-0.5 font-label-sm text-label-sm text-on-surface-variant">
+<span>11/16 Occ.</span>
+<span class="text-primary font-bold">68%</span>
+</div>
+</button>
+<button class="building-tab flex flex-col items-start px-3 py-2 rounded-xl bg-surface-container-lowest text-on-surface flex-shrink-0 min-w-[130px] shadow-sm transition-all text-left" data-bld="BLD-08">
+<div class="flex items-center justify-between w-full">
+<span class="font-label-sm text-label-sm text-secondary font-semibold">BLD-08</span>
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+</div>
+<span class="font-title-md text-title-md mt-0.5 truncate w-full">Hermon Heights</span>
+<div class="flex items-center justify-between w-full mt-0.5 font-label-sm text-label-sm text-on-surface-variant">
+<span>14/20 Occ.</span>
+<span class="text-primary font-bold">70%</span>
+</div>
+</button>
+<button class="building-tab flex flex-col items-start px-3 py-2 rounded-xl bg-surface-container-lowest text-on-surface flex-shrink-0 min-w-[130px] shadow-sm transition-all text-left" data-bld="BLD-09">
+<div class="flex items-center justify-between w-full">
+<span class="font-label-sm text-label-sm text-secondary font-semibold">BLD-09</span>
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+</div>
+<span class="font-title-md text-title-md mt-0.5 truncate w-full">Covenant Rest</span>
+<div class="flex items-center justify-between w-full mt-0.5 font-label-sm text-label-sm text-on-surface-variant">
+<span>8/16 Occ.</span>
+<span class="text-primary font-bold">50%</span>
+</div>
+</button>
+</div>
+</div>
+<!-- Building Occupancy Distribution Graphic (Portfolio Glance) -->
+<div class="px-gutter-sm py-2">
+<div class="bg-surface-container-low rounded-2xl p-space-sm shadow-sm flex flex-col gap-2">
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="font-label-md text-label-md font-semibold text-primary flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px] text-secondary">pie_chart</span>
+          Campus Lodging Allocation (190)
+        </span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Check-outs Today: 14</span>
+</div>
+<!-- Stacked Distribution Bar -->
+<div class="w-full h-3 bg-surface-container-highest rounded-full overflow-hidden flex">
+<div class="h-full bg-primary-container" style="width: 67.3%" title="Occupied (128)"></div>
+<div class="h-full bg-[#447f57]" style="width: 20%" title="Available (38)"></div>
+<div class="h-full bg-secondary" style="width: 7.9%" title="Reserved (15)"></div>
+<div class="h-full bg-error" style="width: 3.7%" title="Maintenance (7)"></div>
+<div class="h-full bg-outline" style="width: 1.1%" title="Locked (2)"></div>
+</div>
+<div class="flex items-center justify-between text-[11px] text-on-surface-variant font-label-sm pt-0.5">
+<span class="flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-primary-container inline-block"></span> 67% In-House</span>
+<span class="flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-[#447f57] inline-block"></span> 20% Vacant</span>
+<span class="flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-secondary inline-block"></span> 8% Due</span>
+<span class="flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-error inline-block"></span> 4% Repairs</span>
+</div>
+</div>
+</div>
+<!-- Building 1 Spotlight Matrix: Bethel House (BLD-01) -->
+<section class="px-gutter-sm py-2 flex flex-col gap-3">
+<!-- Building Card Heading -->
+<div class="bg-surface-container-lowest rounded-2xl p-space-sm shadow-sm flex flex-col gap-2">
+<div class="flex items-start justify-between gap-2">
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="px-2 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed font-label-sm text-label-sm font-bold">BLD-01</span>
+<span class="font-headline-sm text-headline-sm text-primary tracking-tight truncate">Bethel House</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+            Executive Suites &amp; Pastoral Lodges • 3 Floors • 24 Suites Total
+          </p>
+</div>
+<div class="flex flex-col items-end flex-shrink-0">
+<span class="font-title-md text-title-md text-primary font-bold">22/24</span>
+<span class="font-label-sm text-label-sm text-secondary font-semibold">91.6% Filled</span>
+</div>
+</div>
+<!-- Quick status indicator pills for this building -->
+<div class="flex items-center gap-2 pt-1 border-t border-surface-container text-body-sm font-body-sm">
+<span class="flex items-center gap-1 text-on-surface-variant font-label-sm text-label-sm">
+<span class="w-2 h-2 rounded-full bg-[#34784a]"></span> 2 Available
+        </span>
+<span class="flex items-center gap-1 text-on-surface-variant font-label-sm text-label-sm">
+<span class="w-2 h-2 rounded-full bg-error"></span> 1 Turnover
+        </span>
+<span class="flex items-center gap-1 text-on-surface-variant font-label-sm text-label-sm">
+<span class="w-2 h-2 rounded-full bg-secondary"></span> 1 Reserved
+        </span>
+<div class="ml-auto">
+<button class="text-secondary font-label-sm text-label-sm font-semibold hover:underline flex items-center gap-0.5">
+            Floor Plan <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Floor 1 Matrix Grid -->
+<div class="flex flex-col gap-2">
+<div class="flex items-center justify-between px-1">
+<span class="font-label-md text-label-md text-primary font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-secondary">layers</span>
+          Floor 1 — Ground Pastoral Wing (6 Suites)
+        </span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Elevator Access / East Cloister</span>
+</div>
+<!-- High Density Room Card Grid -->
+<div class="flex flex-col gap-2">
+<!-- Room 101: Occupied VIP -->
+<div class="bg-surface-container-lowest rounded-xl p-3 shadow-sm hover:shadow-md transition-all active:scale-[0.99] cursor-pointer flex flex-col gap-2" onclick="openRoomDrawer('101', 'Executive Pastoral Suite', 'Bishop David O. Oyedepo Entourage', 'Occupied', 'Key #201', 'Nov 14 - Nov 18', '₦65,000/night', 'VIP Protocol Pre-cleared')">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-2">
+<div class="w-10 h-10 rounded-lg bg-primary-container text-on-primary flex flex-col items-center justify-center font-bold">
+<span class="font-label-sm text-[10px] uppercase text-primary-fixed leading-none">RM</span>
+<span class="font-title-md text-title-md leading-none mt-0.5">101</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-title-md text-title-md text-primary truncate font-semibold">Bishop Oyedepo Guest</span>
+<span class="material-symbols-outlined text-secondary text-[16px]">verified</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant truncate">Ref: #CH-2025-9411 • King Ensuite</span>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-primary-container text-primary-fixed font-label-sm text-label-sm font-semibold flex items-center gap-1 flex-shrink-0">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-fixed"></span> Occupied
+            </span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm pt-1 bg-surface-container-low px-2.5 py-1.5 rounded-lg">
+<span class="text-on-surface-variant flex items-center gap-1 font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[16px] text-primary">key</span> Key Card #201 Issued
+            </span>
+<span class="text-primary font-label-sm text-label-sm font-bold">Dep: Nov 18 (2d left)</span>
+</div>
+</div>
+<!-- Room 102: Available Walk-in Ready -->
+<div class="bg-surface-container-lowest rounded-xl p-3 shadow-sm hover:shadow-md transition-all active:scale-[0.99] cursor-pointer flex flex-col gap-2" onclick="openRoomDrawer('102', 'Deluxe Pastoral Lodge', 'Vacant / Sanitized', 'Available', 'Master Box #A12', 'Immediate', '₦45,000 / Member ₦38,250', 'Fresh linens installed 10:30 AM')">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-2">
+<div class="w-10 h-10 rounded-lg bg-[#34784a] text-on-primary flex flex-col items-center justify-center font-bold">
+<span class="font-label-sm text-[10px] uppercase text-[#c7ecd1] leading-none">RM</span>
+<span class="font-title-md text-title-md leading-none mt-0.5">102</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-title-md text-title-md text-primary font-semibold">Vacant &amp; Inspected</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant truncate">Standard ₦45,000 • Member ₦38,250</span>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-[#ebf7ee] text-[#1c6934] font-label-sm text-label-sm font-bold flex items-center gap-1 flex-shrink-0">
+<span class="w-1.5 h-1.5 rounded-full bg-[#298344]"></span> Available
+            </span>
+</div>
+<div class="flex items-center justify-between pt-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-secondary">sanitizer</span> Deep cleaned by Sis. Dorcas
+            </span>
+<button class="h-7 px-3 rounded-lg bg-secondary text-on-secondary font-label-sm text-label-sm font-semibold active:scale-95 shadow-sm" onclick="event.stopPropagation(); alert('Quick Walk-in Booking initiated for Room 102');">
+              Assign Walk-in
+            </button>
+</div>
+</div>
+<!-- Room 103: Reserved / Inbound Arrival -->
+<div class="bg-surface-container-lowest rounded-xl p-3 shadow-sm hover:shadow-md transition-all active:scale-[0.99] cursor-pointer flex flex-col gap-2" onclick="openRoomDrawer('103', 'Executive Suite &amp; Study', 'Rev. Ejike Mbaka delegation', 'Reserved', 'Pre-programmed #303', 'Arrival Today 3:00 PM', '₦55,000/night', 'Paystack Direct Confirmation')">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-2">
+<div class="w-10 h-10 rounded-lg bg-secondary-container text-on-secondary-container flex flex-col items-center justify-center font-bold">
+<span class="font-label-sm text-[10px] uppercase text-secondary leading-none">RM</span>
+<span class="font-title-md text-title-md leading-none mt-0.5">103</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-title-md text-title-md text-primary font-semibold">Rev. Mbaka Arrival 3 PM</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant truncate">Paystack Verified • Airport Transfer set</span>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed-variant font-label-sm text-label-sm font-semibold flex items-center gap-1 flex-shrink-0">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> Reserved
+            </span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm pt-1 bg-surface-container-low px-2.5 py-1.5 rounded-lg">
+<span class="text-secondary font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">schedule</span> ETA in 2 hrs 15 mins
+            </span>
+<span class="text-on-surface-variant font-label-sm text-label-sm">Welcome Basket: Placed</span>
+</div>
+</div>
+<!-- Room 104: Occupied Clergy (Interactive Showcase) -->
+<div class="bg-surface-container-lowest rounded-xl p-3 shadow-sm hover:shadow-md transition-all active:scale-[0.99] cursor-pointer flex flex-col gap-2 ring-1 ring-primary/10" onclick="openRoomDrawer('104', 'Executive Pastoral Lodge', 'Pastor E. Adebayo', 'Occupied', 'Card Key #204', 'Nov 12 - Nov 19', '₦45,000/night', 'Conference Speaker Badge Issued')">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-2">
+<div class="w-10 h-10 rounded-lg bg-primary-container text-on-primary flex flex-col items-center justify-center font-bold">
+<span class="font-label-sm text-[10px] uppercase text-primary-fixed leading-none">RM</span>
+<span class="font-title-md text-title-md leading-none mt-0.5">104</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1">
+<span class="font-title-md text-title-md text-primary font-semibold">Pastor E. Adebayo</span>
+<span class="px-1.5 py-0.2 rounded bg-surface-container text-secondary text-[10px] font-bold">SPEAKER</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant truncate">Checked In 2 days ago • Key #204</span>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-primary-container text-primary-fixed font-label-sm text-label-sm font-semibold flex items-center gap-1 flex-shrink-0">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-fixed"></span> Occupied
+            </span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm pt-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-secondary">room_service</span> Breakfast: Diab. Friendly
+            </span>
+<span class="font-label-sm text-label-sm text-primary font-bold">Folio: ₦180,000 (Paid)</span>
+</div>
+</div>
+<!-- Room 105: Maintenance Hold -->
+<div class="bg-surface-container-lowest rounded-xl p-3 shadow-sm hover:shadow-md transition-all active:scale-[0.99] cursor-pointer flex flex-col gap-2" onclick="openRoomDrawer('105', 'Standard Double Pastoral', 'Housekeeping / Facilities Work', 'Maintenance', 'Master Key Required', 'Expected Clearance: 5:00 PM', 'N/A', 'A/C Filter &amp; Kneeler Polish')">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-2">
+<div class="w-10 h-10 rounded-lg bg-error-container text-on-error-container flex flex-col items-center justify-center font-bold">
+<span class="font-label-sm text-[10px] uppercase text-error leading-none">RM</span>
+<span class="font-title-md text-title-md leading-none mt-0.5">105</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-title-md text-title-md text-primary font-semibold">A/C Service &amp; Kneeler Polish</span>
+<span class="font-body-sm text-body-sm text-error truncate font-medium">Assigned: Bro. Samuel (Estate Dept)</span>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-error-container text-on-error-container font-label-sm text-label-sm font-semibold flex items-center gap-1 flex-shrink-0">
+<span class="w-1.5 h-1.5 rounded-full bg-error"></span> Repairs
+            </span>
+</div>
+<div class="flex items-center justify-between pt-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-error">handyman</span> Est. Completion: 5:00 PM
+            </span>
+<button class="h-7 px-3 rounded-lg bg-surface-container text-primary hover:bg-surface-container-high font-label-sm text-label-sm font-semibold active:scale-95" onclick="event.stopPropagation(); alert('Room 105 release confirmation dialog initiated.');">
+              Inspect &amp; Release
+            </button>
+</div>
+</div>
+<!-- Room 106: Available -->
+<div class="bg-surface-container-lowest rounded-xl p-3 shadow-sm hover:shadow-md transition-all active:scale-[0.99] cursor-pointer flex flex-col gap-2" onclick="openRoomDrawer('106', 'Pastoral Queen Suite', 'Vacant', 'Available', 'Master Box #A16', 'Ready', '₦45,000 / Member ₦38,250', 'Ready for immediate occupancy')">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-2">
+<div class="w-10 h-10 rounded-lg bg-[#34784a] text-on-primary flex flex-col items-center justify-center font-bold">
+<span class="font-label-sm text-[10px] uppercase text-[#c7ecd1] leading-none">RM</span>
+<span class="font-title-md text-title-md leading-none mt-0.5">106</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-title-md text-title-md text-primary font-semibold">Queen Suite (Quiet Courtyard)</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant truncate">Ready for Occupancy • Prayer nook</span>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-[#ebf7ee] text-[#1c6934] font-label-sm text-label-sm font-bold flex items-center gap-1 flex-shrink-0">
+<span class="w-1.5 h-1.5 rounded-full bg-[#298344]"></span> Available
+            </span>
+</div>
+<div class="flex items-center justify-between pt-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Standard Rate ₦45,000</span>
+<button class="h-7 px-3 rounded-lg bg-secondary text-on-secondary font-label-sm text-label-sm font-semibold active:scale-95 shadow-sm" onclick="event.stopPropagation(); alert('Assigning Room 106 to incoming pilgrim');">
+              Assign Walk-in
+            </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Floors 2 & 3 Collapsed Summary Drawers -->
+<div class="flex flex-col gap-2 pt-1">
+<div class="bg-surface-container-low rounded-xl p-3 flex items-center justify-between cursor-pointer hover:bg-surface-container transition-colors" onclick="toggleFloor('floor2Content', 'f2Chevron')">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px] text-primary">layers</span>
+<div class="flex flex-col">
+<span class="font-title-md text-title-md text-primary">Floor 2 — Visiting Bishops Wing</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">8 Rooms (8/8 Occupied • 100%)</span>
+</div>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="px-2 py-0.5 rounded-full bg-primary-container text-primary-fixed font-label-sm text-label-sm font-bold">Full</span>
+<span class="material-symbols-outlined text-[20px] text-on-surface-variant transition-transform" id="f2Chevron">expand_more</span>
+</div>
+</div>
+<div class="hidden bg-surface-container-lowest p-3 rounded-xl flex flex-col gap-2 text-body-sm font-body-sm" id="floor2Content">
+<div class="grid grid-cols-4 gap-2 text-center font-label-sm text-label-sm">
+<div class="p-2 rounded bg-primary-container text-on-primary font-bold">201 Occ</div>
+<div class="p-2 rounded bg-primary-container text-on-primary font-bold">202 Occ</div>
+<div class="p-2 rounded bg-primary-container text-on-primary font-bold">203 Occ</div>
+<div class="p-2 rounded bg-primary-container text-on-primary font-bold">204 Occ</div>
+<div class="p-2 rounded bg-primary-container text-on-primary font-bold">205 Occ</div>
+<div class="p-2 rounded bg-primary-container text-on-primary font-bold">206 Occ</div>
+<div class="p-2 rounded bg-primary-container text-on-primary font-bold">207 Occ</div>
+<div class="p-2 rounded bg-primary-container text-on-primary font-bold">208 Occ</div>
+</div>
+</div>
+<div class="bg-surface-container-low rounded-xl p-3 flex items-center justify-between cursor-pointer hover:bg-surface-container transition-colors" onclick="toggleFloor('floor3Content', 'f3Chevron')">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px] text-primary">layers</span>
+<div class="flex flex-col">
+<span class="font-title-md text-title-md text-primary">Floor 3 — Contemplative Hermitage</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">10 Rooms (8 Occ, 1 Res, 1 Maint)</span>
+</div>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm font-bold">90%</span>
+<span class="material-symbols-outlined text-[20px] text-on-surface-variant transition-transform" id="f3Chevron">expand_more</span>
+</div>
+</div>
+<div class="hidden bg-surface-container-lowest p-3 rounded-xl flex flex-col gap-2 text-body-sm font-body-sm" id="floor3Content">
+<div class="grid grid-cols-5 gap-1.5 text-center font-label-sm text-label-sm">
+<div class="p-1.5 rounded bg-primary-container text-on-primary">301</div>
+<div class="p-1.5 rounded bg-primary-container text-on-primary">302</div>
+<div class="p-1.5 rounded bg-primary-container text-on-primary">303</div>
+<div class="p-1.5 rounded bg-secondary-fixed text-on-secondary-fixed font-bold">304</div>
+<div class="p-1.5 rounded bg-primary-container text-on-primary">305</div>
+<div class="p-1.5 rounded bg-primary-container text-on-primary">306</div>
+<div class="p-1.5 rounded bg-primary-container text-on-primary">307</div>
+<div class="p-1.5 rounded bg-primary-container text-on-primary">308</div>
+<div class="p-1.5 rounded bg-error-container text-on-error-container font-bold">309</div>
+<div class="p-1.5 rounded bg-primary-container text-on-primary">310</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Secondary Building Spotlight: BLD-04 Shiloh Pavilion -->
+<section class="px-gutter-sm py-2 flex flex-col gap-3">
+<div class="bg-surface-container-lowest rounded-2xl p-space-sm shadow-sm flex flex-col gap-2">
+<div class="flex items-start justify-between gap-2">
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm font-bold">BLD-04</span>
+<span class="font-headline-sm text-headline-sm text-primary tracking-tight truncate">Shiloh Pavilion</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+            Convention Block • Standard Doubles with Study Desks (26 Rooms)
+          </p>
+</div>
+<div class="flex flex-col items-end flex-shrink-0">
+<span class="font-title-md text-title-md text-primary font-bold">24/26</span>
+<span class="font-label-sm text-label-sm text-[#298344] font-semibold">2 Free</span>
+</div>
+</div>
+<!-- Quick Room Pills Grid Matrix (High density visualization) -->
+<div class="grid grid-cols-6 gap-1.5 pt-1 text-center font-label-sm text-label-sm">
+<div class="py-2 rounded-lg bg-primary-container text-primary-fixed font-semibold">401</div>
+<div class="py-2 rounded-lg bg-primary-container text-primary-fixed font-semibold">402</div>
+<div class="py-2 rounded-lg bg-primary-container text-primary-fixed font-semibold">403</div>
+<div class="py-2 rounded-lg bg-[#34784a] text-on-primary font-bold shadow-sm">404*</div>
+<div class="py-2 rounded-lg bg-primary-container text-primary-fixed font-semibold">405</div>
+<div class="py-2 rounded-lg bg-primary-container text-primary-fixed font-semibold">406</div>
+<div class="py-2 rounded-lg bg-primary-container text-primary-fixed font-semibold">407</div>
+<div class="py-2 rounded-lg bg-primary-container text-primary-fixed font-semibold">408</div>
+<div class="py-2 rounded-lg bg-[#34784a] text-on-primary font-bold shadow-sm">409*</div>
+<div class="py-2 rounded-lg bg-secondary text-on-secondary font-semibold">410</div>
+<div class="py-2 rounded-lg bg-primary-container text-primary-fixed font-semibold">411</div>
+<div class="py-2 rounded-lg bg-primary-container text-primary-fixed font-semibold">412</div>
+</div>
+<p class="font-label-sm text-label-sm text-on-surface-variant text-center pt-1">
+        * Rooms 404 &amp; 409 available for Diocesan Youth Delegates tonight
+      </p>
+</div>
+</section>
+<!-- Quick Floating Action / Audit Bar -->
+<div class="px-gutter-sm py-2">
+<div class="bg-primary text-on-primary rounded-2xl p-4 shadow-lg flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-primary-fixed">
+<span class="material-symbols-outlined text-[22px]">assignment_turned_in</span>
+</div>
+<div class="flex flex-col">
+<span class="font-title-md text-title-md">Evening Housekeeping Run</span>
+<span class="font-body-sm text-body-sm text-primary-fixed-dim">16 turn-downs remaining • Shift 2</span>
+</div>
+</div>
+<button class="h-9 px-3 rounded-lg bg-secondary text-on-secondary font-label-md text-label-md font-semibold active:scale-95 shadow-sm" onclick="alert('Launching Housekeeping Dispatch Matrix');">
+        Dispatch
+      </button>
+</div>
+</div>
+<!-- Interactive Slide-over Room Detail Sheet (Drawer) -->
+<div class="fixed inset-0 bg-black/50 z-50 hidden transition-opacity opacity-0 flex justify-end" id="roomDrawerBackdrop" onclick="closeRoomDrawer()">
+<div class="w-full max-w-md bg-surface h-full shadow-2xl p-gutter-sm flex flex-col gap-4 overflow-y-auto transform translate-y-full transition-transform duration-300" id="roomDrawerCard" onclick="event.stopPropagation()">
+<!-- Drawer Header -->
+<div class="flex items-center justify-between pb-2 border-b border-surface-container">
+<div class="flex items-center gap-2">
+<div class="w-12 h-12 rounded-xl bg-primary text-on-primary flex flex-col items-center justify-center font-bold" id="drawerRoomBadge">
+<span class="text-[10px] uppercase tracking-wide opacity-80">ROOM</span>
+<span class="text-title-lg font-title-lg" id="drawerRoomNumber">104</span>
+</div>
+<div class="flex flex-col">
+<span class="font-title-md text-title-md text-primary" id="drawerRoomType">Executive Pastoral Lodge</span>
+<span class="font-body-sm text-body-sm text-secondary font-semibold" id="drawerBuildingName">Bethel House (BLD-01)</span>
+</div>
+</div>
+<button class="w-9 h-9 rounded-full bg-surface-container flex items-center justify-center text-on-surface hover:bg-surface-container-high transition-colors" onclick="closeRoomDrawer()">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Current Occupant Details Card -->
+<div class="bg-surface-container-lowest rounded-xl p-3 shadow-sm flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-semibold">Occupant Manifest</span>
+<span class="px-2 py-0.5 rounded-full bg-primary-container text-primary-fixed font-label-sm text-label-sm font-bold" id="drawerStatusTag">Occupied</span>
+</div>
+<div class="flex items-center gap-3 py-1">
+<div class="w-10 h-10 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-bold font-title-md">
+            PA
+          </div>
+<div class="flex flex-col min-w-0">
+<span class="font-title-md text-title-md text-primary font-semibold truncate" id="drawerGuestName">Pastor E. Adebayo</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant" id="drawerStayPeriod">Nov 12 - Nov 19 (7 Nights)</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-2 pt-2 border-t border-surface-container font-body-sm text-body-sm">
+<div>
+<span class="font-label-sm text-label-sm text-on-surface-variant block">Access Key</span>
+<span class="font-semibold text-primary" id="drawerKeyId">Card Key #204</span>
+</div>
+<div>
+<span class="font-label-sm text-label-sm text-on-surface-variant block">Billing Rate</span>
+<span class="font-semibold text-primary" id="drawerRate">₦45,000 / Night</span>
+</div>
+</div>
+</div>
+<!-- Special Notes / Pastoral Needs -->
+<div class="bg-surface-container-low rounded-xl p-3 flex flex-col gap-1.5">
+<span class="font-label-sm text-label-sm font-semibold text-secondary uppercase tracking-wider">Hostel Notes &amp; Dietary</span>
+<p class="font-body-sm text-body-sm text-on-surface" id="drawerNotes">
+          Guest requires daily morning intercessory communion wine service at 6:30 AM. Strictly low-sodium parish kitchen menu.
+        </p>
+</div>
+<!-- Admin Action Buttons Group -->
+<div class="flex flex-col gap-2 mt-auto pt-4">
+<div class="grid grid-cols-2 gap-2">
+<button class="h-11 rounded-lg bg-surface-container-high text-primary font-label-md text-label-md font-semibold flex items-center justify-center gap-1.5 active:scale-95" onclick="alert('Status change modal triggered');">
+<span class="material-symbols-outlined text-[18px]">published_with_changes</span>
+<span>Update State</span>
+</button>
+<button class="h-11 rounded-lg bg-surface-container-high text-primary font-label-md text-label-md font-semibold flex items-center justify-center gap-1.5 active:scale-95" onclick="alert('Locking room for Special Diocesan Event');">
+<span class="material-symbols-outlined text-[18px]">lock</span>
+<span>Event Lock</span>
+</button>
+</div>
+<button class="h-11 rounded-lg bg-secondary text-on-secondary font-label-md text-label-md font-semibold flex items-center justify-center gap-1.5 shadow-sm active:scale-95" onclick="alert('Expedited Housekeeping Requested for ' + document.getElementById('drawerRoomNumber').innerText);">
+<span class="material-symbols-outlined text-[18px]">cleaning_services</span>
+<span>Request Priority Housekeeping</span>
+</button>
+<button class="h-11 rounded-lg bg-primary text-on-primary font-label-md text-label-md font-semibold flex items-center justify-center gap-1.5 shadow-sm active:scale-95" onclick="alert('Viewing Complete Guest Folio &amp; Payment Breakdown');">
+<span class="material-symbols-outlined text-[18px]">receipt_long</span>
+<span>View Guest Folio &amp; Ledger</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<script>
+  // Simple state & interaction management
+  function openRoomDrawer(roomNo, roomType, guest, status, key, stay, rate, notes) {
+    const backdrop = document.getElementById('roomDrawerBackdrop');
+    const card = document.getElementById('roomDrawerCard');
+    
+    document.getElementById('drawerRoomNumber').innerText = roomNo;
+    document.getElementById('drawerRoomType').innerText = roomType;
+    document.getElementById('drawerGuestName').innerText = guest;
+    document.getElementById('drawerStatusTag').innerText = status;
+    document.getElementById('drawerKeyId').innerText = key;
+    document.getElementById('drawerStayPeriod').innerText = stay;
+    document.getElementById('drawerRate').innerText = rate;
+    document.getElementById('drawerNotes').innerText = notes || "Standard ministerial lodging protocol applies.";
+
+    backdrop.classList.remove('hidden');
+    setTimeout(() => {
+      backdrop.classList.remove('opacity-0');
+      card.classList.remove('translate-y-full');
+    }, 10);
+  }
+
+  function closeRoomDrawer() {
+    const backdrop = document.getElementById('roomDrawerBackdrop');
+    const card = document.getElementById('roomDrawerCard');
+    backdrop.classList.add('opacity-0');
+    card.classList.add('translate-y-full');
+    setTimeout(() => {
+      backdrop.classList.add('hidden');
+    }, 300);
+  }
+
+  function toggleFloor(contentId, chevronId) {
+    const content = document.getElementById(contentId);
+    const chevron = document.getElementById(chevronId);
+    if (content.classList.contains('hidden')) {
+      content.classList.remove('hidden');
+      chevron.innerText = 'expand_less';
+    } else {
+      content.classList.add('hidden');
+      chevron.innerText = 'expand_more';
+    }
+  }
+
+  // Building horizontal tabs switching interaction
+  const tabs = document.querySelectorAll('.building-tab');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => {
+        t.classList.remove('bg-primary', 'text-on-primary');
+        t.classList.add('bg-surface-container-lowest', 'text-on-surface');
+      });
+      tab.classList.remove('bg-surface-container-lowest', 'text-on-surface');
+      tab.classList.add('bg-primary', 'text-on-primary');
+    });
+  });
+
+  // Search input feedback
+  const searchInput = document.getElementById('matrixSearchInput');
+  searchInput.addEventListener('input', (e) => {
+    const term = e.target.value.toLowerCase();
+    // Micro interaction: highlight cards
+    const cards = document.querySelectorAll('[onclick^="openRoomDrawer"]');
+    cards.forEach(card => {
+      if (card.innerText.toLowerCase().includes(term)) {
+        card.style.opacity = '1';
+      } else {
+        card.style.opacity = '0.35';
+      }
+    });
+  });
+</script></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface/90 backdrop-blur-xl shadow-[0_-2px_12px_rgba(23,56,41,0.05)]" data-active-classes="text-primary-container font-semibold"><div class="flex justify-around items-center h-16 px-space-xs"><a class="flex flex-col items-center justify-center min-w-[44px] min-h-[44px] px-space-xs text-on-surface-variant hover:text-primary transition-colors" data-path="explore" href="#"><span class="material-symbols-outlined text-[22px]">bed</span><span class="font-label-sm text-label-sm mt-0.5">Explore</span></a><a class="flex flex-col items-center justify-center min-w-[44px] min-h-[44px] px-space-xs text-on-surface-variant hover:text-primary transition-colors" data-path="events" href="#"><span class="material-symbols-outlined text-[22px]">church</span><span class="font-label-sm text-label-sm mt-0.5">Events</span></a><a class="flex flex-col items-center justify-center min-w-[44px] min-h-[44px] px-space-xs text-on-surface-variant hover:text-primary transition-colors" data-path="my-bookings" href="#"><span class="material-symbols-outlined text-[22px]">book_online</span><span class="font-label-sm text-label-sm mt-0.5">Bookings</span></a><a class="flex flex-col items-center justify-center min-w-[44px] min-h-[44px] px-space-xs text-on-surface-variant hover:text-primary transition-colors" data-path="staff-ops" href="#"><span class="material-symbols-outlined text-[22px]">admin_panel_settings</span><span class="font-label-sm text-label-sm mt-0.5">Staff Ops</span></a></div></nav></body></html>

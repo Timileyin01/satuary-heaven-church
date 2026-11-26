@@ -1,0 +1,8 @@
+{
+  "name": "Sanctuary Haven",
+  "description": "Church hospitality and diocesan lodging portal and operations suite across 9 residence buildings and 190 rooms.",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
